@@ -1,4 +1,4 @@
-from django.shortcuts import timezone
+from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
@@ -30,8 +30,11 @@ class Todos(APIView):
         current_day = now.day
 
         #쿼리 파라미터에 "month"값이 없으면, 디폴트 값으로 current_month 가져옴
-        month = request.query_params.get("month", current_motnth)
+        month = request.query_params.get("month", current_month)
         month = int(month)
+
+        day = request.query_params.get("day", current_day)
+        day = int(day)
 
         user = self.get_user(user_id)
         todos = Todo.objects.filter(
@@ -45,7 +48,7 @@ class Todos(APIView):
         )
         return Response(serializer.data)
     
-    def post(self, user_id):
+    def post(self, request, user_id):
         serializer = TodoSerializer(data=request.data)
         if serializer.is_valid():
             user = self.get_user(user_id)
