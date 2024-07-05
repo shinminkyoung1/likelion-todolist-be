@@ -13,6 +13,8 @@ class Todo(models.Model):
     default="",
     blank=True
   )
+  is_bookmarked = models.BooleanField(default=False)
+  dark_mode = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

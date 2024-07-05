@@ -15,4 +15,6 @@ class TodoSerializer(serializers.ModelSerializer):
             'content',
             'is_checked',
             'emoji',
+            'is_bookmarked',
+            'dark_mode',
         ]

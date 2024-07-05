@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError, NotFound
 from .serializers import UserSerializer
 from .models import User
+from rest_framework import status
 
 
 # Create your views here.
@@ -18,9 +19,9 @@ class Register(APIView):
             serializer.save()
             return Response({
                 "detail" : "회원가입 요청이 성공적으로 처리되었습니다."
-            })
+            }, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class login(APIView):
 
@@ -42,4 +43,4 @@ class login(APIView):
         user = self.get_user(username, password)
         return Response({
             "user_id" : user.id
-        })
+        }, status=status.HTTP_200_OK)
